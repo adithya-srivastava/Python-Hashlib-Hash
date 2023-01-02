@@ -25,4 +25,4 @@ def decrypt_image(encrypted_data):
     for i in range(len(encrypted_data)):
         decrypted_data += bytes([encrypted_data[i] ^ image_hash[i % len(image_hash)]])
     
-    return decrypted_data
+    return decrypted_data 
