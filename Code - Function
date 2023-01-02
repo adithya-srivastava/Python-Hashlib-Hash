@@ -1,0 +1,28 @@
+import hashlib
+import base64
+
+def encrypt_image(image_data):
+    # Generate a hash of the image data
+    image_hash = hashlib.sha256(image_data).digest()
+    
+    # Encrypt the image data using the hash
+    encrypted_data = b''
+    for i in range(len(image_data)):
+        encrypted_data += bytes([image_data[i] ^ image_hash[i % len(image_hash)]])
+    
+    # Encode the encrypted data as a base64 string
+    return base64.b64encode(encrypted_data)
+
+def decrypt_image(encrypted_data):
+    # Decode the base64 encoded encrypted data
+    encrypted_data = base64.b64decode(encrypted_data)
+    
+    # Generate a hash of the decrypted data
+    image_hash = hashlib.sha256(encrypted_data).digest()
+    
+    # Decrypt the data using the hash
+    decrypted_data = b''
+    for i in range(len(encrypted_data)):
+        decrypted_data += bytes([encrypted_data[i] ^ image_hash[i % len(image_hash)]])
+    
+    return decrypted_data
